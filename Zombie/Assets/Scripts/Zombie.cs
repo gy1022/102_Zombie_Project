@@ -23,7 +23,8 @@ public class Zombie : LivingEntity
     private float lastAttackTime; // 마지막 공격 시점
 
     // 추적할 대상이 존재하는지 알려주는 프로퍼티
-    private bool hasTarget {
+    private bool hasTarget 
+    {
         get
         {
             // 추적할 대상이 존재하고, 대상이 사망하지 않았다면 true
@@ -37,7 +38,8 @@ public class Zombie : LivingEntity
         }
     }
 
-    private void Awake() {
+    private void Awake() 
+    {
         // 게임 오브젝트로부터 사용할 컴포넌트 가져오기
         navMeshAgent = GetComponent<NavMeshAgent>();
         zombieAnimator = GetComponent<Animator>();
@@ -49,7 +51,8 @@ public class Zombie : LivingEntity
     }
 
     // 좀비 AI의 초기 스펙을 결정하는 셋업 메서드
-    public void Setup(ZombieData zombieData) {
+    public void Setup(ZombieData zombieData) 
+    {
         //체력 설정
         startingHealth = zombieData.health;
         health = zombieData.health;
@@ -61,18 +64,21 @@ public class Zombie : LivingEntity
         zombieRenderer.material.color = zombieData.skinColor;
     }
 
-    private void Start() {
+    private void Start() 
+    {
         // 게임 오브젝트 활성화와 동시에 AI의 추적 루틴 시작
         StartCoroutine(UpdatePath());
     }
 
-    private void Update() {
+    private void Update() 
+    {
         // 추적 대상의 존재 여부에 따라 다른 애니메이션 재생
         zombieAnimator.SetBool("HasTarget", hasTarget);
     }
 
     // 주기적으로 추적할 대상의 위치를 찾아 경로 갱신
-    private IEnumerator UpdatePath() {
+    private IEnumerator UpdatePath() 
+    {
         // 살아 있는 동안 무한 루프
         while (!dead)
         {
@@ -116,7 +122,8 @@ public class Zombie : LivingEntity
     }
 
     // 데미지를 입었을 때 실행할 처리
-    public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal) {
+    public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal) 
+    {
 
         if (!dead)
         {
@@ -134,7 +141,8 @@ public class Zombie : LivingEntity
     }
 
     // 사망 처리
-    public override void Die() {
+    public override void Die() 
+    {
         // LivingEntity의 Die()를 실행하여 기본 사망 처리 실행
         base.Die();
 
@@ -155,7 +163,8 @@ public class Zombie : LivingEntity
         zombieAudioPlayer.PlayOneShot(deathSound);
     }
 
-    private void OnTriggerStay(Collider other) {
+    private void OnTriggerStay(Collider other) 
+    {
         //자신이 사망하지 않았으며
         //최근 공격 시점에서 timeBetAttack 이상 시간이 자났다면 공격 가능
         if(!dead && Time.time >= lastAttackTime + timeBetAttack)
